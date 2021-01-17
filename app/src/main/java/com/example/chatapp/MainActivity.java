@@ -1,6 +1,9 @@
 package com.example.chatapp;
 
+import android.content.Context;
 import android.os.Bundle;
+import android.view.inputmethod.EditorInfo;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 
@@ -35,12 +38,28 @@ public class MainActivity extends AppCompatActivity {
 
         ArrayList<Message> messagesList = new ArrayList<>();
 
+        Context context = this;
+        editText.setOnEditorActionListener((v, actionId, event) -> {
+            if (actionId == EditorInfo.IME_ACTION_SEND) {
+                Message message = new Message(editText.getText().toString());
+                messagesList.add(message);
+                adapter = new MessageRecycler(context, messagesList);
+                recyclerView.setAdapter(adapter);
+                return false;
+            }
+            // do your stuff here
+            return false;
+        });
+
         send.setOnClickListener(v -> {
 
             Message message = new Message(editText.getText().toString());
             messagesList.add(message);
             adapter = new MessageRecycler(this, messagesList);
             recyclerView.setAdapter(adapter);
+
+            InputMethodManager imm = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
+            imm.toggleSoftInput(InputMethodManager.HIDE_IMPLICIT_ONLY, 0);
         });
 
 

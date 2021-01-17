@@ -24,13 +24,16 @@
             android:layout_marginStart="@dimen/layout_margin"
             android:layout_marginLeft="@dimen/layout_margin"
             android:autofillHints="message"
+            android:imeOptions="actionSend"
             android:inputType="text"
-            android:labelFor="@id/sendBtn" />
+            tools:ignore="LabelFor" />
 
         <Button
             android:id="@+id/sendBtn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/sendBtn_margin"
+            android:layout_marginLeft="@dimen/sendBtn_margin"
             android:text="@string/send_btn" />
     </LinearLayout>
 

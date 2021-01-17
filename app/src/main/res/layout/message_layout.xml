@@ -5,13 +5,17 @@
     android:orientation="vertical">
 
     <TextView
-        android:textAlignment="textEnd"
-        android:layout_marginEnd="10dp"
+        android:layout_marginTop="@dimen/layout_margin"
         android:id="@+id/message_text"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/message_text"
-        android:textSize="@dimen/message_textSize"
+        android:layout_marginStart="50dp"
+        android:layout_marginLeft="50dp"
+        android:background="@drawable/shape"
         android:gravity="end"
-        android:layout_marginRight="10dp" />
+        android:padding="20dp"
+        android:text="@string/message_text"
+        android:textAlignment="textEnd"
+        android:textColor="@color/white"
+        android:textSize="@dimen/message_textSize" />
 </LinearLayout>
