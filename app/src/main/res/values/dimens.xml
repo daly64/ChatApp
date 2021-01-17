@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="listView_height">600dp</dimen>
+    <dimen name="layout_margin">5dp</dimen>
+    <dimen name="message_editText_width">300dp</dimen>
+    <dimen name="message_textSize">22sp</dimen>
+</resources>
