@@ -60,6 +60,7 @@ public class MainActivity extends AppCompatActivity {
 
             InputMethodManager imm = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
             imm.toggleSoftInput(InputMethodManager.HIDE_IMPLICIT_ONLY, 0);
+
         });
 
 
