@@ -3,8 +3,6 @@ package com.example.chatapp;
 import android.content.Context;
 import android.os.Bundle;
 import android.view.inputmethod.EditorInfo;
-import android.view.inputmethod.InputMethodManager;
-import android.widget.Button;
 import android.widget.EditText;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -28,7 +26,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         EditText editText = findViewById(R.id.editText);
-        Button send = findViewById(R.id.sendBtn);
+//        Button send = findViewById(R.id.sendBtn);
 
 
         recyclerView = findViewById(R.id.list_item);
@@ -41,17 +39,17 @@ public class MainActivity extends AppCompatActivity {
         Context context = this;
         editText.setOnEditorActionListener((v, actionId, event) -> {
             if (actionId == EditorInfo.IME_ACTION_SEND) {
-                Message message = new Message(editText.getText().toString());
-                messagesList.add(message);
-                adapter = new MessageRecycler(context, messagesList);
-                recyclerView.setAdapter(adapter);
+                // Send message
+                ToolBox.sendMessage(editText,messagesList,context,recyclerView);
+
+
                 return false;
             }
-            // do your stuff here
+
             return false;
         });
 
-        send.setOnClickListener(v -> {
+       /* send.setOnClickListener(v -> {
 
             Message message = new Message(editText.getText().toString());
             messagesList.add(message);
@@ -61,7 +59,7 @@ public class MainActivity extends AppCompatActivity {
             InputMethodManager imm = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
             imm.toggleSoftInput(InputMethodManager.HIDE_IMPLICIT_ONLY, 0);
 
-        });
+        });*/
 
 
     }

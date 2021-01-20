@@ -7,7 +7,8 @@
     tools:context=".MainActivity">
 
 
-    <Button
+   <!--
+   <Button
         android:id="@+id/sendBtn"
         android:layout_width="0dp"
         android:layout_height="0dp"
@@ -22,25 +23,29 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/editText"
         app:layout_constraintTop_toBottomOf="@+id/list_item" />
+   -->
 
     <EditText
         android:id="@+id/editText"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginStart="8dp"
         android:layout_marginLeft="8dp"
         android:layout_marginTop="8dp"
-        android:layout_marginEnd="120dp"
-        android:layout_marginRight="120dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginRight="8dp"
         android:layout_marginBottom="8dp"
         android:autofillHints="message"
+        android:drawableEnd="@drawable/ic_send"
         android:imeOptions="actionSend"
         android:inputType="text"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/list_item"
-        tools:ignore="LabelFor" />
+        tools:ignore="LabelFor"
+        android:drawableRight="@drawable/ic_send" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/list_item"
@@ -55,6 +60,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:reverseLayout="false" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

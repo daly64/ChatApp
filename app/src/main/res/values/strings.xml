@@ -2,4 +2,9 @@
     <string name="app_name">ChatApp</string>
     <string name="send_btn">Send</string>
     <string name="message_text">message text</string>
+    <string name="user_name">User name</string>
+    <string name="create_a_new_account">Create a new account</string>
+    <string name="email">Email</string>
+    <string name="password">Password</string>
+    <string name="register">Register</string>
 </resources>
