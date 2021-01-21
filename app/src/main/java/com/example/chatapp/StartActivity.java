@@ -17,8 +17,11 @@ public class StartActivity extends AppCompatActivity {
         login = findViewById(R.id.login);
         register = findViewById(R.id.register);
 
-        register.setOnClickListener(v->{
-            ToolBox.openActivity(this,RegisterActivity.class);
+        register.setOnClickListener(v -> {
+            ToolBox.openActivity(this, RegisterActivity.class);
+        });
+        login.setOnClickListener(v -> {
+            ToolBox.openActivity(this, LoginActivity.class);
         });
 
 

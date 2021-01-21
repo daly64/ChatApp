@@ -1,13 +1,12 @@
 package com.example.chatapp;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Button;
-import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
+import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -50,14 +49,16 @@ public class RegisterActivity extends AppCompatActivity {
         auth = FirebaseAuth.getInstance();
 
         btn_register.setOnClickListener(v -> {
+            ToolBox.hideKeyboard(this);
             String txt_username = username.getText().toString();
             String txt_email = email.getText().toString();
             String txt_password = password.getText().toString();
             if (txt_username.isEmpty() || txt_email.isEmpty() || txt_password.isEmpty()) {
-                Toast.makeText(RegisterActivity.this, "all fields are required", Toast.LENGTH_SHORT).show();
-            } else if (txt_password.length() > 6) {
-                Toast.makeText(RegisterActivity.this, "password must be at last 6 characters", Toast.LENGTH_SHORT).show();
+                Snackbar.make(v, "all fields are required", Snackbar.LENGTH_SHORT).show();
+            } else if (txt_password.length() < 6) {
+                Snackbar.make(v, "password must be at last 6 characters", Snackbar.LENGTH_SHORT).show();
             } else {
+                Snackbar.make(v, "registration complete", Snackbar.LENGTH_SHORT).show();
                 register(txt_username, txt_email, txt_password);
             }
 
@@ -81,10 +82,7 @@ public class RegisterActivity extends AppCompatActivity {
 
                         reference.setValue(hashMap).addOnCompleteListener(task1 -> {
                             if (task1.isSuccessful()) {
-                                Intent intent = new Intent(this, MainActivity.class);
-                                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
-                                startActivity(intent);
-                                finish();
+                                ToolBox.openActivity(this, MainActivity.class);
                             }
 
                         });
@@ -92,5 +90,6 @@ public class RegisterActivity extends AppCompatActivity {
                     }
                 });
     }
+
 
 }
