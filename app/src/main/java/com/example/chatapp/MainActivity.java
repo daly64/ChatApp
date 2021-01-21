@@ -10,7 +10,6 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.chatapp.models.Message;
-import com.example.chatapp.models.MessageRecycler;
 
 import java.util.ArrayList;
 
@@ -40,7 +39,7 @@ public class MainActivity extends AppCompatActivity {
         editText.setOnEditorActionListener((v, actionId, event) -> {
             if (actionId == EditorInfo.IME_ACTION_SEND) {
                 // Send message
-                ToolBox.sendMessage(editText,messagesList,context,recyclerView);
+//                ToolBox.sendMessage(editText,messagesList,context,recyclerView);
 
 
                 return false;

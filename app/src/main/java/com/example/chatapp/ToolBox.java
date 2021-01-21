@@ -1,24 +1,28 @@
 package com.example.chatapp;
 
-import android.content.Context;
-import android.widget.EditText;
-
-import androidx.recyclerview.widget.RecyclerView;
-
-import com.example.chatapp.models.Message;
-import com.example.chatapp.models.MessageRecycler;
-
-import java.util.List;
+import android.app.Activity;
+import android.content.Intent;
 
 public class ToolBox {
-    public static void sendMessage(EditText editText, List<Message> messagesList,
-                                   Context context, RecyclerView recyclerView){
 
-        RecyclerView.Adapter adapter;
-        Message message = new Message(editText.getText().toString());
-        messagesList.add(message);
-        adapter = new MessageRecycler(context, messagesList);
-        recyclerView.setAdapter(adapter);
-        editText.setText("");
+    public static void openActivity(Activity from, Class<?> to, Integer extra) {
+        Intent intent = new Intent(from, to);
+        intent.putExtra("EXTRA", extra);
+        from.startActivity(intent);
+        from.finish();
     }
+
+    public static void openActivity(Activity from, Class<?> to) {
+        Intent intent = new Intent(from, to);
+        from.startActivity(intent);
+        from.finish();
+    }
+
+    public static Integer getExtraInt(Activity activity) {
+        Intent intent = activity.getIntent();
+        return intent.getIntExtra("EXTRA", 0);
+
+    }
+
+
 }
