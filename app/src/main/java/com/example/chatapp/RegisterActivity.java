@@ -9,11 +9,6 @@ import androidx.appcompat.widget.Toolbar;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-
-import java.util.HashMap;
 
 public class RegisterActivity extends AppCompatActivity {
 
@@ -21,7 +16,6 @@ public class RegisterActivity extends AppCompatActivity {
     Button btn_register;
 
     FirebaseAuth auth;
-    DatabaseReference reference;
 
     Toolbar toolbar;
 
@@ -30,15 +24,8 @@ public class RegisterActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
 
+        ToolBox.setToolbar(this, MainActivity.class, R.id.toolbar, "Register");
         toolbar = findViewById(R.id.toolbar);
-
-        setSupportActionBar(toolbar);
-        getSupportActionBar().setTitle("Register");
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setDisplayShowHomeEnabled(true);
-
-        toolbar.setNavigationOnClickListener(v ->
-                ToolBox.openActivity(RegisterActivity.this, StartActivity.class));
 
 
         username = findViewById(R.id.username);
@@ -59,36 +46,11 @@ public class RegisterActivity extends AppCompatActivity {
                 Snackbar.make(v, "password must be at last 6 characters", Snackbar.LENGTH_SHORT).show();
             } else {
                 Snackbar.make(v, "registration complete", Snackbar.LENGTH_SHORT).show();
-                register(txt_username, txt_email, txt_password);
+                ToolBox.firebaseAuthRegister(this, MainActivity.class, txt_username, txt_email, txt_password, v, auth);
             }
 
         });
 
-    }
-
-    private void register(String username, String email, String password) {
-
-        auth.createUserWithEmailAndPassword(email, password)
-                .addOnCompleteListener(task -> {
-                    if (task.isSuccessful()) {
-                        FirebaseUser firebaseUser = auth.getCurrentUser();
-                        String userId = firebaseUser.getUid();
-                        reference = FirebaseDatabase.getInstance().getReference("Users").child(userId);
-
-                        HashMap<String, String> hashMap = new HashMap<>();
-                        hashMap.put("id", userId);
-                        hashMap.put("username", username);
-                        hashMap.put("imageURL", "default");
-
-                        reference.setValue(hashMap).addOnCompleteListener(task1 -> {
-                            if (task1.isSuccessful()) {
-                                ToolBox.openActivity(this, MainActivity.class);
-                            }
-
-                        });
-
-                    }
-                });
     }
 
 
