@@ -14,6 +14,17 @@ public class StartActivity extends AppCompatActivity {
     FirebaseUser firebaseUser;
 
     @Override
+    protected void onStart() {
+        super.onStart();
+        firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
+
+//        check if user is null
+        if (firebaseUser != null) {
+            ToolBox.openActivity(this, MainActivity.class);
+        }
+    }
+
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_start);
@@ -23,13 +34,6 @@ public class StartActivity extends AppCompatActivity {
 
         register.setOnClickListener(v -> ToolBox.openActivity(this, RegisterActivity.class));
         login.setOnClickListener(v -> ToolBox.openActivity(this, LoginActivity.class));
-
-        firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
-
-//        check if user is null
-        if (firebaseUser != null) {
-            ToolBox.openActivity(this, MainActivity.class);
-        }
 
 
     }

@@ -42,8 +42,7 @@ public class ToolBox {
 
 
     public static void setToolbar(AppCompatActivity activity, Class<?> homeActivity, int Toolbar_id, String title) {
-        Toolbar toolbar;
-        toolbar = activity.findViewById(Toolbar_id);
+        Toolbar toolbar = activity.findViewById(Toolbar_id);
         activity.setSupportActionBar(toolbar);
         activity.getSupportActionBar().setTitle(title);
         activity.getSupportActionBar().setDisplayHomeAsUpEnabled(true);

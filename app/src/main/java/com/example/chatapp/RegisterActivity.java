@@ -24,8 +24,7 @@ public class RegisterActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
 
-        ToolBox.setToolbar(this, MainActivity.class, R.id.toolbar, "Register");
-        toolbar = findViewById(R.id.toolbar);
+        ToolBox.setToolbar(RegisterActivity.this, StartActivity.class, R.id.toolbar, "Register");
 
 
         username = findViewById(R.id.username);

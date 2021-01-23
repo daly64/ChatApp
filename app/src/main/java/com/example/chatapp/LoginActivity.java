@@ -21,9 +21,8 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        String sn = ToolBox.getSerialNumber();
 
-        ToolBox.setToolbar(this, MainActivity.class, R.id.toolbar, "Login");
+        ToolBox.setToolbar( LoginActivity.this, StartActivity.class, R.id.toolbar, "Login");
 
         email = findViewById(R.id.Email);
         password = findViewById(R.id.password);
@@ -42,7 +41,7 @@ public class LoginActivity extends AppCompatActivity {
                 Snackbar.make(v, "password must be at last 6 characters", Snackbar.LENGTH_SHORT).show();
             } else {
 //                login(txt_email, txt_password, v);
-                ToolBox.firebaseAuthLogin(this,MainActivity.class, txt_email, txt_password, v, auth);
+                ToolBox.firebaseAuthLogin(this, MainActivity.class, txt_email, txt_password, v, auth);
             }
 
         });
