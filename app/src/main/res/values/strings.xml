@@ -14,4 +14,5 @@
     <string name="hello_user_fragment">Hello user fragment</string>
     <string name="chats">CHATS</string>
     <string name="users">USERS</string>
+    <string name="username">UserName</string>
 </resources>
