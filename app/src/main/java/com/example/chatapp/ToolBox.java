@@ -21,7 +21,7 @@ import java.util.HashMap;
 
 public class ToolBox {
 
-    public static void openActivity(Activity from, Class<?> to, Integer extra) {
+    public static void openActivity(Activity from, Class<?> to, String extra) {
         Intent intent = new Intent(from, to);
         intent.putExtra("EXTRA", extra);
         from.startActivity(intent);
@@ -34,9 +34,9 @@ public class ToolBox {
         from.finish();
     }
 
-    public static Integer getExtraInt(Activity activity) {
+    public static String getExtra(Activity activity) {
         Intent intent = activity.getIntent();
-        return intent.getIntExtra("EXTRA", 0);
+        return intent.getStringExtra("EXTRA");
 
     }
 
@@ -94,45 +94,7 @@ public class ToolBox {
         return serialNumber;
     }
 
-    // firebase auth login
-    public static void firebaseAuthLogin(Activity activity, Class<?> to, String txt_email, String txt_password, View v, FirebaseAuth auth) {
 
-        auth.signInWithEmailAndPassword(txt_email, txt_password)
-                .addOnCompleteListener(task -> {
-                    if (task.isSuccessful()) {
-                        openActivity(activity, to);
-
-                    } else {
-                        Snackbar.make(v, "login failed", Snackbar.LENGTH_SHORT).show();
-                    }
-                });
-    }
-
-    // firebase auth register
-    public static void firebaseAuthRegister(Activity activity, Class<?> to, String username, String email, String password, View v, FirebaseAuth auth) {
-
-        auth.createUserWithEmailAndPassword(email, password)
-                .addOnCompleteListener(task -> {
-                    if (task.isSuccessful()) {
-                        FirebaseUser firebaseUser = auth.getCurrentUser();
-                        String userId = firebaseUser.getUid();
-                        DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Users").child(userId);
-
-                        HashMap<String, String> hashMap = new HashMap<>();
-                        hashMap.put("id", userId);
-                        hashMap.put("username", username);
-                        hashMap.put("imageURL", "default");
-
-                        reference.setValue(hashMap).addOnCompleteListener(task1 -> {
-                            if (task1.isSuccessful()) {
-                                openActivity(activity, to);
-                            }
-
-                        });
-
-                    }
-                });
-    }
 
 
 }

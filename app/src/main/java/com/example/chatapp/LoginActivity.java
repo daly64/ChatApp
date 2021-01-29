@@ -1,6 +1,7 @@
 package com.example.chatapp;
 
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Button;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -22,7 +23,7 @@ public class LoginActivity extends AppCompatActivity {
         setContentView(R.layout.activity_login);
 
 
-        ToolBox.setToolbar( LoginActivity.this, StartActivity.class, R.id.toolbar, "Login");
+        ToolBox.setToolbar(LoginActivity.this, StartActivity.class, R.id.toolbar, "Login");
 
         email = findViewById(R.id.Email);
         password = findViewById(R.id.password);
@@ -40,8 +41,7 @@ public class LoginActivity extends AppCompatActivity {
             } else if (txt_password.length() < 6) {
                 Snackbar.make(v, "password must be at last 6 characters", Snackbar.LENGTH_SHORT).show();
             } else {
-//                login(txt_email, txt_password, v);
-                ToolBox.firebaseAuthLogin(this, MainActivity.class, txt_email, txt_password, v, auth);
+                login(txt_email, txt_password, v);
             }
 
         });
@@ -49,7 +49,7 @@ public class LoginActivity extends AppCompatActivity {
 
     }
 
-/*    private void login(String txt_email, String txt_password, View v) {
+    private void login(String txt_email, String txt_password, View v) {
 
         auth.signInWithEmailAndPassword(txt_email, txt_password)
                 .addOnCompleteListener(task -> {
@@ -60,5 +60,5 @@ public class LoginActivity extends AppCompatActivity {
                         Snackbar.make(v, "login failed", Snackbar.LENGTH_SHORT).show();
                     }
                 });
-    }*/
+    }
 }

@@ -1,6 +1,8 @@
 package com.example.chatapp;
 
+import android.app.Activity;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Button;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -9,6 +11,11 @@ import androidx.appcompat.widget.Toolbar;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
+import java.util.HashMap;
 
 public class RegisterActivity extends AppCompatActivity {
 
@@ -45,12 +52,36 @@ public class RegisterActivity extends AppCompatActivity {
                 Snackbar.make(v, "password must be at last 6 characters", Snackbar.LENGTH_SHORT).show();
             } else {
                 Snackbar.make(v, "registration complete", Snackbar.LENGTH_SHORT).show();
-                ToolBox.firebaseAuthRegister(this, MainActivity.class, txt_username, txt_email, txt_password, v, auth);
+                Register(txt_username, txt_email, txt_password, v);
+
             }
 
         });
 
     }
 
+    public void Register(String username, String email, String password, View v) {
 
+        auth.createUserWithEmailAndPassword(email, password)
+                .addOnCompleteListener(task -> {
+                    if (task.isSuccessful()) {
+                        FirebaseUser firebaseUser = auth.getCurrentUser();
+                        String userId = firebaseUser.getUid();
+                        DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Users").child(userId);
+
+                        HashMap<String, String> hashMap = new HashMap<>();
+                        hashMap.put("id", userId);
+                        hashMap.put("username", username);
+                        hashMap.put("imageURL", "default");
+
+                        reference.setValue(hashMap).addOnCompleteListener(task1 -> {
+                            if (task1.isSuccessful()) {
+                                ToolBox.openActivity(this, MainActivity.class);
+                            }
+
+                        });
+
+                    }
+                });
+    }
 }
