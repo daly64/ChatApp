@@ -15,4 +15,6 @@
     <string name="chats">CHATS</string>
     <string name="users">USERS</string>
     <string name="username">UserName</string>
+    <string name="send">send</string>
+    <string name="type_a_message">Type a message ...</string>
 </resources>
