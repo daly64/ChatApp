@@ -1,6 +1,8 @@
 package com.example.chatapp;
 
 import android.os.Bundle;
+import android.view.View;
+import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
@@ -50,14 +52,16 @@ public class MessageActivity extends AppCompatActivity {
         ToolBox.setToolbar(this, MainActivity.class, R.id.toolbar1, "");
         String userId = ToolBox.getExtra(this);
 
-        btn_send.setOnClickListener(v -> {
-            String msg = text_send.getText().toString();
-            if (!msg.equals("")) {
-                sendMessage(currentUser.getUid(), userId, msg);
-            } else {
-                Snackbar.make(v, "you can't send empty message", Snackbar.LENGTH_SHORT).show();
+        //        manage send button clicking
+        btn_send.setOnClickListener(v -> manageMessage(v, userId));
+
+        //      manage a keyboard send clicking
+        text_send.setOnEditorActionListener((v, actionId, event) -> {
+            if (actionId == EditorInfo.IME_ACTION_SEND) {
+                manageMessage(v, userId);
+                return true;
             }
-            text_send.setText("");
+            return false;
         });
 
 
@@ -91,5 +95,16 @@ public class MessageActivity extends AppCompatActivity {
         hashMap.put("receiver", receiver);
         hashMap.put("message", message);
         reference.child("chats").push().setValue(hashMap);
+    }
+
+    private void manageMessage(View v, String userId) {
+        String msg = text_send.getText().toString();
+        if (!msg.equals("")) {
+            sendMessage(currentUser.getUid(), userId, msg);
+        } else {
+            Snackbar.make(v, "you can't send empty message", Snackbar.LENGTH_SHORT).show();
+        }
+        text_send.setText("");
+        ToolBox.hideKeyboard(this);
     }
 }

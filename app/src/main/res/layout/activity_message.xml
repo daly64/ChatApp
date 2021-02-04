@@ -63,6 +63,7 @@
             android:autofillHints=""
             android:background="@android:color/transparent"
             android:hint="@string/type_a_message"
+            android:imeOptions="actionSend"
             android:inputType="textLongMessage" />
 
         <ImageButton
