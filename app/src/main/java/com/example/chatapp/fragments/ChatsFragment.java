@@ -57,7 +57,6 @@ public class ChatsFragment extends Fragment {
                         getSender(message.getSender());
                     }
                 }
-
             }
 
             @Override

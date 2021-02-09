@@ -1,5 +1,6 @@
 package com.example.chatapp;
 
+import android.app.AlertDialog;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -46,6 +47,15 @@ public class MainActivity extends AppCompatActivity {
         username = findViewById(R.id.username);
         firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
         reference = FirebaseDatabase.getInstance().getReference("Users").child(firebaseUser.getUid());
+
+
+
+
+        ToolBox.autoUpdate(this);
+        username.setOnClickListener(v -> {
+            ToolBox.autoUpdate(this);
+        });
+
 
         reference.addValueEventListener(new ValueEventListener() {
             @Override

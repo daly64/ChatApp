@@ -2,7 +2,11 @@ package com.example.chatapp;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
 import android.os.Build;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
@@ -11,13 +15,10 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 import com.google.android.material.snackbar.Snackbar;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.remoteconfig.FirebaseRemoteConfig;
+import com.google.firebase.remoteconfig.FirebaseRemoteConfigSettings;
 
 import java.lang.reflect.Method;
-import java.util.HashMap;
 
 public class ToolBox {
 
@@ -74,6 +75,7 @@ public class ToolBox {
             Method get = c.getMethod("get", String.class);
 
             serialNumber = (String) get.invoke(c, "gsm.sn1");
+            assert serialNumber != null;
             if (serialNumber.equals(""))
                 serialNumber = (String) get.invoke(c, "ril.serialnumber");
             if (serialNumber.equals(""))
@@ -95,6 +97,46 @@ public class ToolBox {
     }
 
 
+    public static void autoUpdate(Context context) {
+        PackageManager manager = context.getPackageManager();
+        Activity activity = (Activity) context;
+        View view = activity.getWindow().peekDecorView();
 
+        try {
+            PackageInfo info = manager.getPackageInfo(context.getPackageName(), PackageManager.GET_ACTIVITIES);
 
+            FirebaseRemoteConfig remoteConfig = FirebaseRemoteConfig.getInstance();
+            remoteConfig.setConfigSettingsAsync(new FirebaseRemoteConfigSettings.Builder().setMinimumFetchIntervalInSeconds(0).build());
+            remoteConfig.setDefaultsAsync(R.xml.remote_config_defaults);
+            remoteConfig.fetchAndActivate().addOnCompleteListener(activity, task -> {
+
+                if (task.isSuccessful()) {
+
+                    String currentVersion = info.versionName;
+                    String latestVersion = remoteConfig.getString("latestVersion");
+
+                    if (Double.parseDouble(latestVersion) > Double.parseDouble(currentVersion)) {
+
+                        AlertDialog.Builder dlgAlert = new AlertDialog.Builder(context);
+                        dlgAlert.setMessage("have to update your application");
+                        dlgAlert.setTitle("Update");
+                        dlgAlert.setPositiveButton("OK", null);
+                        dlgAlert.setCancelable(true);
+                        dlgAlert.create().show();
+                    }
+
+                } else {
+                    Snackbar.make(view, "Fetch failed", Snackbar.LENGTH_SHORT).show();
+                }
+
+            });
+
+        } catch (
+                PackageManager.NameNotFoundException e) {
+            e.printStackTrace();
+        }
+
+        ;
+
+    }
 }
